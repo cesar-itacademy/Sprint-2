@@ -1,0 +1,78 @@
+/* Ejercicio Animación CSS - Pelota de tenis */
+
+/* Caja donde rebota la pelota*/
+#caja {
+   
+  position: relative;
+  margin: 1em auto;
+  width: 860px;
+  height: 440px;
+  border: 1px solid;
+  border-top: 0px;
+}
+
+/* Guia que recorre la caja conduciendo la pelota horizontalmente */
+#guiaHorizontal {
+  position: absolute;
+  width: 40px;
+  height: 440px;
+ 
+ /* Animacion de la guia horizontal. Movimiento a una velocidad constante,
+ cuando llega al final del recorrido se realiza a la inversa y en loop infinito */
+ 
+  animation-name: movHorizontal;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-duration: 2.8s;
+}
+
+/* Propiedades de la pelota de 40px de diametro */
+#pelota {
+  /* En la animacion rebote se modifica la propiedad bottom para simular el movimiento vertical */
+  position: absolute; 
+   /* Tamaño, radio y color de fondo de la pelota */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgb(163, 163, 5);
+ 
+ /* Propiedades de la animacion rebote, que efectua el movimiento vertical de la pelota en loop infinito */
+  animation-name: rebote;
+  animation-iteration-count: infinite;
+  animation-duration: 3.2s;
+}  
+
+
+/* Keyframes para mover la pelota en horizontal hacia la izquierda
+hasta el final de la caja (820px+40px de pelota) y volver al principio en loop */
+@keyframes movHorizontal {
+  from { left: 0; }
+  to   { left: 820px; }
+}
+
+/* Keyframes de movimiento vertical simulando la gravedad y el rebote de la pelota en la superficie de la caja */
+@keyframes rebote {
+ 
+ from, to  {
+   /* Establecemos el valor de bottom a 0 para iniciar el movimiento vertical */
+    bottom: 0; 
+    /* Simula la subida de la pelota ralentizando la velocidad al final por el efecto de la gravedad*/
+    -webkit-animation-timing-function: ease-out;
+  }
+  50% {
+    /* Modificamos el valor bottom al maximo vertical de la caja (400px + 40px de pelota) para completar el movimiento vertical */
+    bottom: 400px;
+    /* Simula la bajada de la pelota acelerando la velocidad al principio por el efecto de la gravedad*/
+    -webkit-animation-timing-function: ease-in;
+  }
+  /* Establecemos el valor altura de la pelota al inicial para cuando se realice el loop */
+  95% {
+    height: 40px;
+  }
+  /* Modificamos la altura de la pelota para simular la deformación en contacto con la base de la caja */
+  100% {
+    height: 30px;
+  }
+}
+  
